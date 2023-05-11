@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-mahesh
+spec:
+  selector:
+    matchLabels:
+      app: node-mahesh
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: node-mahesh
+    spec:
+      containers:
+        - name: node-api-mahesh
+          imagePullPolicy: Always
+          image: nginx:latest
+          ports:
+            - containerPort: 80
