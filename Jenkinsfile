@@ -4,10 +4,9 @@ pipeline {
     stage ('Build and Test') {
       steps {
         echo "Hello World!"
-        "shell("docker ps")"
-        sh "echo Hello from the shell"
-        sh "hostname"
-        sh "uptime"  
+        sh 'echo Hello from the shell'
+        sh 'docker ps'
+        sh 'uptime'  
       }
     }  
     
