@@ -80,12 +80,4 @@ pipeline {
     }
 }
   }
-    // Post-build actions
-  post {
-      always {
-          slackSend channel: '#jenkins-notification',
-              color: COLOR_MAP[currentBuild.currentResult],
-              message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: $RUN_DISPLAY_URL"
-      }
-  }
 }
