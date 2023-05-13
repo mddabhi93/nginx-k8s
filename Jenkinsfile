@@ -3,7 +3,12 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
-        echo 'Starting test cases'  
+        sh '''
+        docker build \
+        -t ${DOCKER_REPO}:${BUILD_NUMBER} .
+        #put your Test cases
+        echo 'Starting test cases'
+        '''   
       }
     }  
     
