@@ -1,8 +1,3 @@
-def COLOR_MAP = [
-    'SUCCESS': 'good', 
-    'FAILURE': 'danger',
-]
-properties([pipelineTriggers([githubPush()])])
 pipeline {
   agent any  
   environment {
