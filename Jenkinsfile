@@ -31,53 +31,6 @@ pipeline {
         '''    
       }
     }  
-    stage ('Artefact') {
-      steps {
-        sh '''
-        $(aws ecr get-login --region ap-south-1 --no-include-email)
-        docker push ${DOCKER_REPO}:${BUILD_NUMBER}
-        '''
-        }
-    }   
-    stage ('Deploy') {
-      steps {
-        sh '''
-        declare -n CLUSTER_NAME=${ENV}_cluster
-        aws eks --region $AWS_DEFAULT_REGION  update-kubeconfig --name ${CLUSTER_NAME}
-        kubectl config set-context --current --namespace=$ENV
-        helm upgrade --install ${HELM_RELEASE_NAME} ${CHART_DIR}/${HELM_RELEASE_NAME}/ \
-        --set image.repository=${DOCKER_REPO} \
-        --set image.tag=${BUILD_NUMBER} \
-        --set environment=-${ENV} \
-        -f ${CHART_DIR}/${HELM_RELEASE_NAME}/values.yaml \
-        --namespace ${ENV}
-        '''
-      }
-    }
-    stage('Cleanup') {
-      steps{
-        sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
-      }
-  }
-// slack notification configuration 
-  stage('Error') {
-    // when doError is equal to 1, return an error
-    when {
-        expression { doError == '1' }
-    }
-    steps {
-        echo "Failure :("
-        error "Test failed on purpose, doError == str(1)"
-    }
-}
-  stage('Success') {
-    // when doError is equal to 0, just print a simple message
-    when {
-        expression { doError == '0' }
-    }
-    steps {
-        echo "Success :)"
-    }
-}
+    
   }
 }
