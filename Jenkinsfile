@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
-        bat '''
+        sh '''
         docker build \
         -t ${DOCKER_REPO}:${BUILD_NUMBER} .
         #put your Test cases
